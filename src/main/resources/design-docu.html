@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Rental JDBC Project Design Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        h1, h2, h3 { color: #333; }
+        pre { background: #f4f4f4; padding: 10px; border: 1px solid #ccc; }
+        ul { margin-left: 20px; }
+    </style>
+</head>
+<body>
+<h1>Car Rental JDBC Project Design Documentation</h1>
+
+<h2>1. Introduction</h2>
+<p>This document provides an overview of the design and architecture of the Car Rental JDBC project. The project serves as a base for a future Spring web application with JPA persistence, OAuth user authentication, and multilingual support (spring-translation). In its current state, the project is a Java Maven project using raw JDBC for persistence with a MariaDB database.</p>
+
+<h2>2. Project Purpose</h2>
+<p>The primary objective of this project is to demonstrate how to construct a base project for a car rental firm. The firm operates from a single location and handles passenger cars, customers, and rental events. The project includes CRUD operations for each entity as well as additional business logic for renting and returning cars.</p>
+
+<h2>3. Database</h2>
+<p>The project uses <strong>MariaDB</strong> as its database. Raw JDBC is used to connect to the database and execute SQL commands. The database schema is initialized using a dedicated <code>DBInitializer</code> class, which creates tables and inserts sample data.</p>
+
+<h2>4. Entities</h2>
+
+<h3>4.1 Car</h3>
+<p><strong>Data Members:</strong></p>
+<ul>
+    <li><strong>id:</strong> int (primary key)</li>
+    <li><strong>brand:</strong> String</li>
+    <li><strong>model:</strong> String</li>
+    <li><strong>year:</strong> int</li>
+    <li><strong>licensePlate:</strong> String (unique)</li>
+    <li><strong>rentalPricePerDay:</strong> double</li>
+    <li><strong>available:</strong> boolean</li>
+    <li><strong>numberOfSeats:</strong> int</li>
+</ul>
+
+<h3>4.2 Customer</h3>
+<p><strong>Data Members:</strong></p>
+<ul>
+    <li><strong>id:</strong> int (primary key)</li>
+    <li><strong>firstName:</strong> String</li>
+    <li><strong>lastName:</strong> String</li>
+    <li><strong>email:</strong> String (unique)</li>
+    <li><strong>phoneNumber:</strong> String</li>
+    <li><strong>driverLicenseNumber:</strong> String (unique)</li>
+    <li><strong>countryCode:</strong> String (maximum length 3)</li>
+</ul>
+
+<h3>4.3 RentalEvent</h3>
+<p><strong>Data Members:</strong></p>
+<ul>
+    <li><strong>id:</strong> int (primary key)</li>
+    <li><strong>carId:</strong> int (foreign key referencing Car)</li>
+    <li><strong>customerId:</strong> int (foreign key referencing Customer)</li>
+    <li><strong>rentalDate:</strong> Date</li>
+    <li><strong>returnDate:</strong> Date</li>
+    <li><strong>totalCost:</strong> double</li>
+    <li><strong>isClosed:</strong> boolean</li>
+</ul>
+
+<h2>5. Business Logic and Operations</h2>
+<p>The following business logic has been implemented:</p>
+<ul>
+    <li><strong>CRUD Operations:</strong> Basic Create, Read, Update, and Delete operations for Car, Customer, and RentalEvent entities are provided through DAO classes.</li>
+    <li><strong>Availability Check:</strong> Before creating a rental event, the system checks whether the selected car is available. If available, the rental event is created and the car's status is updated to <code>available = false</code>.</li>
+    <li><strong>Return Process:</strong> When a car is returned, the related rental event is marked as closed (<code>isClosed = true</code>) and the car's availability is reset to available.</li>
+    <li><strong>Complex Queries:</strong> A search functionality is provided to query cars based on:
+        <ul>
+            <li>Range condition for <code>numberOfSeats</code> (from...to)</li>
+            <li>Maximum condition on <code>rentalPricePerDay</code></li>
+            <li>Specific <code>brand</code> and <code>model</code></li>
+        </ul>
+    </li>
+</ul>
+
+<h2>6. Architecture and Package Structure</h2>
+<p>The project follows a layered architecture with the following packages:</p>
+<ul>
+    <li><strong>hu.valyis.progenv.model:</strong> Contains the entity classes (<code>Car</code>, <code>Customer</code>, <code>RentalEvent</code>).</li>
+    <li><strong>hu.valyis.progenv.persistence:</strong> Contains the <code>DatabaseConnection</code> class and DAO classes (<code>CarDAO</code>, <code>CustomerDAO</code>, <code>RentalEventDAO</code>) that perform database operations using JDBC.</li>
+    <li><strong>hu.valyis.progenv.service:</strong> Contains service layer classes (<code>CarService</code>, <code>CustomerService</code>, <code>RentalEventService</code>) that encapsulate business logic and interact with the DAO layer.</li>
+    <li><strong>hu.valyis.progenv.util:</strong> Contains utility classes, such as the <code>DBInitializer</code>, which sets up the database schema and populates sample data.</li>
+</ul>
+
+<h2>7. Database Initialization</h2>
+<p>The <code>DBInitializer</code> class is responsible for initializing the database. Its <code>initializeDB()</code> method performs the following steps:</p>
+<ul>
+    <li>Drops existing tables (<code>RentalEvent</code>, <code>Customer</code>, <code>Car</code>) to ensure a clean state.</li>
+    <li>Creates new tables with the defined schema.</li>
+    <li>Inserts sample data:
+        <ul>
+            <li>10 sample records for the <strong>Car</strong> table.</li>
+            <li>20 sample records for the <strong>Customer</strong> table.</li>
+            <li>50 sample records for the <strong>RentalEvent</strong> table.</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>8. Testing</h2>
+<p>JUnit tests are implemented to verify the correctness of the CRUD operations and business logic. These tests help ensure that the database interactions and business rules (such as the availability check before renting) work as expected.</p>
+
+<h2>9. Future Enhancements</h2>
+<ul>
+    <li>Integration with the Spring framework to build a full-featured web application.</li>
+    <li>Transition from raw JDBC to JPA for object-relational mapping.</li>
+    <li>Implement OAuth-based user authentication.</li>
+    <li>Add multilingual support using Spring Translation.</li>
+</ul>
+
+<h2>10. Conclusion</h2>
+<p>This design documentation outlines the key components, architecture, and business rules of the Car Rental JDBC project. It provides a solid foundation for future enhancements and the development of a more complex Spring-based web application.</p>
+
+</body>
+</html>
