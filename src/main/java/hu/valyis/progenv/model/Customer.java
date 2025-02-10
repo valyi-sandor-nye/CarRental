@@ -65,4 +65,17 @@ public class Customer {
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", driverLicenseNumber='" + driverLicenseNumber + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                '}';
+    }
 }

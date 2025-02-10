@@ -1,6 +1,10 @@
 package hu.valyis.progenv.model;
 
+import hu.valyis.progenv.persistence.CarDAO;
+import hu.valyis.progenv.persistence.CustomerDAO;
+
 import java.sql.Date;
+import java.sql.SQLException;
 
 public class RentalEvent {
     private int id;
@@ -67,5 +71,41 @@ public class RentalEvent {
 
     public void setClosed(boolean isClosed) {
         this.isClosed = isClosed;
+    }
+
+    @Override
+    public String toString() {
+        String carInfo = "Car ID: " + carId;
+        String customerInfo = "Customer ID: " + customerId;
+
+        try {
+            CarDAO carDAO = new CarDAO();
+            // Assuming that getCarById returns a Car object or null if not found.
+            hu.valyis.progenv.model.Car car = carDAO.getCarById(carId);
+            if (car != null) {
+                carInfo = car.getBrand() + " " + car.getModel();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            CustomerDAO customerDAO = new CustomerDAO();
+            // Assuming that getCustomerById returns a Customer object or null if not found.
+            hu.valyis.progenv.model.Customer customer = customerDAO.getCustomerById(customerId);
+            if (customer != null) {
+                customerInfo = customer.getFirstName() + " " + customer.getLastName() + " (ID: " + customer.getId() + ")";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "RentalEvent [ID: " + id
+                + ", " + carInfo
+                + ", " + customerInfo
+                + ", Rental Date: " + rentalDate
+                + ", Return Date: " + returnDate
+                + ", Total Cost: " + totalCost
+                + ", isClosed: " + isClosed + "]";
     }
 }

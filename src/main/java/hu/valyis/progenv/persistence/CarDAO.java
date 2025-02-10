@@ -8,12 +8,12 @@ import java.util.List;
 public class CarDAO {
 
     public void createCar(Car car) throws SQLException {
-        String sql = "INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, car.getBrand());
             stmt.setString(2, car.getModel());
-            stmt.setInt(3, car.getYear());
+            stmt.setInt(3, car.getBuildYear());
             stmt.setString(4, car.getLicensePlate());
             stmt.setDouble(5, car.getRentalPricePerDay());
             stmt.setBoolean(6, car.isAvailable());
@@ -60,12 +60,12 @@ public class CarDAO {
     }
 
     public void updateCar(Car car) throws SQLException {
-        String sql = "UPDATE Car SET brand=?, model=?, year=?, licensePlate=?, rentalPricePerDay=?, available=?, numberOfSeats=? WHERE id=?";
+        String sql = "UPDATE Car SET brand=?, model=?, buildYear=?, licensePlate=?, rentalPricePerDay=?, available=?, numberOfSeats=? WHERE id=?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, car.getBrand());
             stmt.setString(2, car.getModel());
-            stmt.setInt(3, car.getYear());
+            stmt.setInt(3, car.getBuildYear());
             stmt.setString(4, car.getLicensePlate());
             stmt.setDouble(5, car.getRentalPricePerDay());
             stmt.setBoolean(6, car.isAvailable());
@@ -114,7 +114,7 @@ public class CarDAO {
         car.setId(rs.getInt("id"));
         car.setBrand(rs.getString("brand"));
         car.setModel(rs.getString("model"));
-        car.setYear(rs.getInt("year"));
+        car.setBuildYear(rs.getInt("buildYear"));
         car.setLicensePlate(rs.getString("licensePlate"));
         car.setRentalPricePerDay(rs.getDouble("rentalPricePerDay"));
         car.setAvailable(rs.getBoolean("available"));

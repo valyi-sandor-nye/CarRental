@@ -4,7 +4,7 @@ public class Car {
     private int id;
     private String brand;
     private String model;
-    private int year;
+    private int buildYear;
     private String licensePlate;
     private double rentalPricePerDay;
     private boolean available;
@@ -35,12 +35,12 @@ public class Car {
         this.model = model;
     }
 
-    public int getYear() {
-        return year;
+    public int getBuildYear() {
+        return buildYear;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setBuildYear(int buildYear) {
+        this.buildYear = buildYear;
     }
 
     public String getLicensePlate() {
@@ -73,6 +73,19 @@ public class Car {
 
     public void setNumberOfSeats(int numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", buildYear=" + buildYear +
+                ", rentalPricePerDay=" + rentalPricePerDay +
+                ", available=" + available +
+                ", numberOfSeats=" + numberOfSeats +
+                '}';
     }
 }
 

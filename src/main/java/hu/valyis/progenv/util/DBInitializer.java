@@ -21,7 +21,7 @@ public class DBInitializer {
                     + "id INT AUTO_INCREMENT PRIMARY KEY, "
                     + "brand VARCHAR(50) NOT NULL, "
                     + "model VARCHAR(50) NOT NULL, "
-                    + "year INT NOT NULL, "
+                    + "buildYear INT NOT NULL, "
                     + "licensePlate VARCHAR(20) NOT NULL UNIQUE, "
                     + "rentalPricePerDay DOUBLE NOT NULL, "
                     + "available BOOLEAN NOT NULL, "
@@ -56,25 +56,25 @@ public class DBInitializer {
             stmt.executeUpdate(createRentalEvent);
 
             // Insert sample Cars (10 records)
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('Toyota', 'Corolla', 2018, 'ABC123', 50.0, true, 5)");
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('Honda', 'Civic', 2019, 'DEF456', 55.0, true, 5)");
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('Ford', 'Focus', 2017, 'GHI789', 45.0, true, 5)");
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('BMW', '3 Series', 2020, 'JKL012', 80.0, true, 5)");
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('Audi', 'A4', 2021, 'MNO345', 85.0, true, 5)");
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('Mercedes', 'C Class', 2020, 'PQR678', 90.0, true, 5)");
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('Volkswagen', 'Golf', 2018, 'STU901', 60.0, true, 5)");
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('Kia', 'Optima', 2019, 'VWX234', 55.0, true, 5)");
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('Hyundai', 'Elantra', 2017, 'YZA567', 50.0, true, 5)");
-            stmt.executeUpdate("INSERT INTO Car (brand, model, year, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
+            stmt.executeUpdate("INSERT INTO Car (brand, model, buildYear, licensePlate, rentalPricePerDay, available, numberOfSeats) " +
                     "VALUES ('Nissan', 'Sentra', 2020, 'BCD890', 52.0, true, 5)");
 
             // Insert sample Customers (20 records)
@@ -107,7 +107,7 @@ public class DBInitializer {
                 double totalCost = 50.0 * 3;
                 // Alternate isClosed: odd events are closed, even are still open
                 boolean isClosed = (i % 2 == 1);
-                String insertRental = String.format(
+                String insertRental = String.format(java.util.Locale.US,
                         "INSERT INTO RentalEvent (carId, customerId, rentalDate, returnDate, totalCost, isClosed) " +
                                 "VALUES (%d, %d, '%s', '%s', %.2f, %b)",
                         carId, customerId, rentalDate, returnDate, totalCost, isClosed);
