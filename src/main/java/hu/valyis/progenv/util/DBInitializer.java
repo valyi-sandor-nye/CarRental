@@ -1,10 +1,13 @@
 package hu.valyis.progenv.util;
 
-import hu.valyis.progenv.persistence.DatabaseConnection;
+import hu.valyis.progenv.persistence.*;
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.SQLException;
 
+@Component
 public class DBInitializer {
 
     public void initializeDB() {

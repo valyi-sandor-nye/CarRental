@@ -2,11 +2,16 @@ package hu.valyis.progenv.service;
 
 import hu.valyis.progenv.model.Car;
 import hu.valyis.progenv.persistence.CarDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class CarService {
-    private CarDAO carDAO = new CarDAO();
+    @Autowired
+    private CarDAO carDAO;
 
     public void addCar(Car car) throws SQLException {
         carDAO.createCar(car);

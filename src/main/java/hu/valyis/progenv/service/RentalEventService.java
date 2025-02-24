@@ -4,13 +4,17 @@ import hu.valyis.progenv.model.Car;
 import hu.valyis.progenv.model.RentalEvent;
 import hu.valyis.progenv.persistence.CarDAO;
 import hu.valyis.progenv.persistence.RentalEventDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class RentalEventService {
     private RentalEventDAO rentalEventDAO = new RentalEventDAO();
-    private CarDAO carDAO = new CarDAO();
+    @Autowired
+    private CarDAO carDAO;
 
     /**
      * Rents a car by creating a rental event.

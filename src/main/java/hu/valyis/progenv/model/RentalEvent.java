@@ -75,37 +75,14 @@ public class RentalEvent {
 
     @Override
     public String toString() {
-        String carInfo = "Car ID: " + carId;
-        String customerInfo = "Customer ID: " + customerId;
-
-        try {
-            CarDAO carDAO = new CarDAO();
-            // Assuming that getCarById returns a Car object or null if not found.
-            hu.valyis.progenv.model.Car car = carDAO.getCarById(carId);
-            if (car != null) {
-                carInfo = car.getBrand() + " " + car.getModel();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            CustomerDAO customerDAO = new CustomerDAO();
-            // Assuming that getCustomerById returns a Customer object or null if not found.
-            hu.valyis.progenv.model.Customer customer = customerDAO.getCustomerById(customerId);
-            if (customer != null) {
-                customerInfo = customer.getFirstName() + " " + customer.getLastName() + " (ID: " + customer.getId() + ")";
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return "RentalEvent [ID: " + id
-                + ", " + carInfo
-                + ", " + customerInfo
-                + ", Rental Date: " + rentalDate
-                + ", Return Date: " + returnDate
-                + ", Total Cost: " + totalCost
-                + ", isClosed: " + isClosed + "]";
+        return "RentalEvent{" +
+                "id=" + id +
+                ", carId=" + carId +
+                ", customerId=" + customerId +
+                ", rentalDate=" + rentalDate +
+                ", returnDate=" + returnDate +
+                ", totalCost=" + totalCost +
+                ", isClosed=" + isClosed +
+                '}';
     }
 }

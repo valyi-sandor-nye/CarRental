@@ -1,28 +1,31 @@
 package hu.valyis.progenv;
 
-import hu.valyis.progenv.persistence.CarDAO;
-import hu.valyis.progenv.persistence.CustomerDAO;
-import hu.valyis.progenv.persistence.RentalEventDAO;
+import hu.valyis.progenv.config.AppConfig;
+import hu.valyis.progenv.persistence.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.SQLException;
+import hu.valyis.progenv.util.DBInitializer;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
 
         System.out.println("Hello and welcome! This is the CarRental app.");
 
-        new hu.valyis.progenv.util.DBInitializer().initializeDB();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        DBInitializer dbinit = context.getBean(DBInitializer.class);
+        dbinit.initializeDB();
+        CarDAO carDAO = context.getBean(CarDAO.class);
         try {
-            System.out.println(new CustomerDAO().getAllCustomers().getFirst());
-            System.out.println(new CustomerDAO().getAllCustomers().getLast());
-            System.out.println(new CarDAO().getAllCars().getFirst());
-            System.out.println(new CarDAO().getAllCars().getLast());
+            System.out.println(new CustomerDAO().getAllCustomers().getFirst().toString());
+            System.out.println(new CustomerDAO().getAllCustomers().getLast().toString());
+            System.out.println(carDAO.getAllCars().getFirst());
+            System.out.println(carDAO.getAllCars().getLast());
             System.out.println(new RentalEventDAO().getAllRentalEvents().getFirst());
             System.out.println(new RentalEventDAO().getAllRentalEvents().getLast());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 }
