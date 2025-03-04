@@ -10,6 +10,8 @@ import java.sql.SQLException;
 @Component
 public class DBInitializer {
 
+    public DBInitializer() {}
+
     public void initializeDB() {
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {

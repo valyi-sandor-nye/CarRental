@@ -10,6 +10,8 @@ public class Car {
     private boolean available;
     private int numberOfSeats;
 
+    public Car() {}
+
     // Getters and Setters
     public int getId() {
         return id;
@@ -86,6 +88,17 @@ public class Car {
                 ", available=" + available +
                 ", numberOfSeats=" + numberOfSeats +
                 '}';
+    }
+
+    public Car(int id, String brand, String model, int buildYear, String licensePlate, double rentalPricePerDay, boolean available, int numberOfSeats) {
+        this.id = id;
+        this.brand = brand;
+        this.model = model;
+        this.buildYear = buildYear;
+        this.licensePlate = licensePlate;
+        this.rentalPricePerDay = rentalPricePerDay;
+        this.available = available;
+        this.numberOfSeats = numberOfSeats;
     }
 }
 
